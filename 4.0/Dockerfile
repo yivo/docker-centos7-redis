@@ -15,6 +15,9 @@ RUN yum -y update \
  # Change working directory to Redis source.
  && cd /tmp/redis-4.0.6 \
  \
+ # Configure Redis to listen to all interfaces.
+ && sed -i "s|^bind 127\.0\.0\.1|# \0|g" redis.conf \
+ \
  # Disable Redis protected mode which is enabled by default but is not needed in context of Docker.
  && sed -i "s/protected-mode yes/protected-mode no/" redis.conf \
  && sed -i "s/define CONFIG_DEFAULT_PROTECTED_MODE 1/define CONFIG_DEFAULT_PROTECTED_MODE 0/" src/server.h \
